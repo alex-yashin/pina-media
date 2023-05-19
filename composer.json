@@ -1,0 +1,36 @@
+{
+    "name": "alex-yashin/pina-media",
+    "keywords": ["php"],
+    "license": "MIT",
+    "homepage": "https://github.com/alex-yashin/pina-media/",
+    "support": {
+        "issues": "https://github.com/alex-yashin/pina-media/issues",
+        "source": "https://github.com/alex-yashin/pina-media/"
+    },
+    "authors": [
+        {
+            "name": "Alex Yashin",
+            "email": "alex-yashin@ya.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "pinahq/framework": "*",
+        "league/flysystem": "1.0.49",
+        "league/flysystem-aws-s3-v3": "*",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-gd": "*",
+        "ext-fileinfo": "*",
+        "ext-exif": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "6.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "PinaMedia\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
