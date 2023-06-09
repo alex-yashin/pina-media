@@ -76,7 +76,7 @@ class MediaType extends IntegerType
      * @return array
      * @throws \Exception
      */
-    private function getMedia($id)
+    protected function getMedia($id)
     {
         $media = MediaGateway::instance()
             ->select('id')
