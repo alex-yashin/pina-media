@@ -43,30 +43,41 @@ class Uploader
     public function save()
     {
         $mediaIds = [];
-        while ($file = $this->getNextUploadedFile()) {
 
-            $match = false;
-            foreach ($this->allowedMimeTypes as $pattern) {
-                if ($file->isMimeType($pattern)) {
-                    $match = true;
-                }
-            }
-
-            if (!$match) {
-                throw new RuntimeException(__('Неверный тип файла') . ': ' . $file->getMimeType());
-            }
-
-            $file->moveToStorage();
-            $mediaId = $file->saveMeta();
-
-            if (empty($mediaId)) {
-                throw new RuntimeException('Error saving meta');
-            }
-
+        while ($mediaId = $this->saveNext()) {
             $mediaIds[] = $mediaId;
         }
 
         return $mediaIds;
+    }
+
+    /**
+     * @return string
+     * @throws \Exception
+     */
+    public function saveNext()
+    {
+        $file = $this->getNextUploadedFile();
+
+        $match = false;
+        foreach ($this->allowedMimeTypes as $pattern) {
+            if ($file->isMimeType($pattern)) {
+                $match = true;
+            }
+        }
+
+        if (!$match) {
+            throw new RuntimeException(__('Неверный тип файла') . ': ' . $file->getMimeType());
+        }
+
+        $file->moveToStorage();
+        $mediaId = $file->saveMeta();
+
+        if (empty($mediaId)) {
+            throw new RuntimeException('Error saving meta');
+        }
+
+        return $mediaId;
     }
 
     public function getNextUploadedFile()
