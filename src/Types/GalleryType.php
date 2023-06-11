@@ -146,7 +146,7 @@ class GalleryType implements TypeInterface
         return '';
     }
 
-    public function filter(TableDataGateway $query, string $key, $value): void
+    public function filter(TableDataGateway $query, $key, $value): void
     {
         //фильтрацию не поддерживаем
     }
