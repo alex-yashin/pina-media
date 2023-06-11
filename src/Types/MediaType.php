@@ -105,6 +105,11 @@ class MediaType extends IntegerType
         return true;
     }
 
+    public function getDefault()
+    {
+        return null;
+    }
+
     public function normalize($value, $isMandatory)
     {
         if (empty($value) && $isMandatory) {
