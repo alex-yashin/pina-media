@@ -2,6 +2,8 @@
 
 namespace PinaMedia;
 
+use Exception;
+use Pina\BadRequestException;
 use Pina\Log;
 use RuntimeException;
 
@@ -38,9 +40,9 @@ class Uploader
 
     /**
      * @return string[]
-     * @throws \Exception
+     * @throws Exception
      */
-    public function save()
+    public function save(): array
     {
         $mediaIds = [];
 
@@ -52,12 +54,15 @@ class Uploader
     }
 
     /**
-     * @return string
-     * @throws \Exception
+     * @return string|null
+     * @throws Exception
      */
-    public function saveNext()
+    public function saveNext(): ?string
     {
         $file = $this->getNextUploadedFile();
+        if (empty($file)) {
+            return null;
+        }
 
         $match = false;
         foreach ($this->allowedMimeTypes as $pattern) {
@@ -67,20 +72,20 @@ class Uploader
         }
 
         if (!$match) {
-            throw new RuntimeException(__('Неверный тип файла') . ': ' . $file->getMimeType());
+            throw new BadRequestException(__('Неверный тип файла') . ': ' . $file->getMimeType());
         }
 
         $file->moveToStorage();
         $mediaId = $file->saveMeta();
 
         if (empty($mediaId)) {
-            throw new RuntimeException('Error saving meta');
+            throw new Exception('Error saving meta');
         }
 
         return $mediaId;
     }
 
-    public function getNextUploadedFile()
+    public function getNextUploadedFile(): ?File
     {
         $next = array_shift($this->queue);
         if (empty($next)) {
