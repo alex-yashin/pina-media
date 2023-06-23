@@ -70,13 +70,7 @@ class Media
 
     public static function getStorage($storageKey)
     {
-        static $storages = array();
-
-        if (!empty($storages[$storageKey])) {
-            return $storages[$storageKey];
-        }
-
-        return $storages[$storageKey] = new Storage($storageKey);
+        return Storages::get($storageKey);
     }
 
     public static function getStorageConfig($storageKey, $configKey)
