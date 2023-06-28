@@ -8,7 +8,7 @@ use Pina\Types\StringType;
 class MimeType extends StringType
 {
 
-    public function getSize()
+    public function getSize(): int
     {
         return 127;
     }

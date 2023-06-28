@@ -9,7 +9,7 @@ use Pina\Types\StringType;
 class StorageType extends StringType
 {
 
-    public function getSize()
+    public function getSize(): int
     {
         return 16;
     }

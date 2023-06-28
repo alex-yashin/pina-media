@@ -86,7 +86,7 @@ class GalleryType implements TypeInterface
         return $gallery->drawWithWrappers();
     }
 
-    public function getSize()
+    public function getSize(): int
     {
         return 0;
     }
@@ -96,9 +96,19 @@ class GalleryType implements TypeInterface
         return null;
     }
 
-    public function isNullable()
+    public function isNullable(): bool
     {
         return true;
+    }
+
+    public function isSearchable(): bool
+    {
+        return false;
+    }
+
+    public function isFiltrable(): bool
+    {
+        return false;
     }
 
     public function normalize($value, $isMandatory)
@@ -141,7 +151,7 @@ class GalleryType implements TypeInterface
         }
     }
 
-    public function getSQLType()
+    public function getSQLType(): string
     {
         return '';
     }
