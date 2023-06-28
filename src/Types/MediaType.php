@@ -8,7 +8,6 @@ use PinaMedia\Controls\MediaControl;
 use PinaMedia\Media;
 use PinaMedia\MediaGateway;
 use Pina\Controls\FormControl;
-use Pina\ResourceManagerInterface;
 use Pina\Types\IntegerType;
 use Pina\App;
 use Pina\Data\Field;
@@ -93,11 +92,6 @@ class MediaType extends IntegerType
         unset($media['storage']);
         unset($media['path']);
         return $media;
-    }
-
-    protected function resources(): ResourceManagerInterface
-    {
-        return App::container()->get(ResourceManagerInterface::class);
     }
 
     public function isNullable(): bool

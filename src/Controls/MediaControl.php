@@ -6,10 +6,6 @@ use Pina\App;
 use Pina\Controls\Control;
 use Pina\CSRF;
 use Pina\Html;
-use Pina\ResourceManagerInterface;
-use Pina\StaticResource\Script;
-
-use Pina\StaticResource\Style;
 
 use function Pina\__;
 
@@ -87,22 +83,16 @@ class MediaControl extends Control
 
     protected function includeScripts()
     {
-        $this->resources()->append((new Script())->setSrc('/media-control.js'));
-        $this->resources()->append((new Style())->setSrc('/media-control.css'));
+        App::assets()->addScript('/media-control.js');
+        App::assets()->addCss('/media-control.css');
 
-        $content = $this->makeScriptContent();
-        $this->resources()->append((new Script())->setContent('<script>' . $content . '</script>'));
+        App::assets()->addScriptContent('<script>' . $this->makeScriptContent() . '</script>');
     }
 
     protected function makeScriptContent()
     {
         $encoded = json_encode($this->media, JSON_UNESCAPED_UNICODE);
         return "SingleMediaControl('#" . $this->tagId . "', '" . $this->name . "', " . $encoded . ");";
-    }
-
-    protected function resources(): ResourceManagerInterface
-    {
-        return App::container()->get(ResourceManagerInterface::class);
     }
 
 }
