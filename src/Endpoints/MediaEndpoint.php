@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Live\Endpoints;
+namespace PinaMedia\Endpoints;
 
 
 use Exception;
