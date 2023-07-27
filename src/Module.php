@@ -39,10 +39,17 @@ class Module implements ModuleInterface
     {
         $media = Config::get('media');
         foreach ($media as $v) {
-            if (empty($v['resize'])) {
+            if (empty($v['driver']) || empty($v['url']) || $v['driver'] != 'resize') {
                 continue;
             }
-            App::router()->register($v['resize'], Endpoints\ResizeEndpoint::class);
+            if ($v['url'][0] != '/') {
+                continue;
+            }
+            $pattern = trim($v['url'], '/');
+            if (empty($pattern)) {
+                continue;
+            }
+            App::router()->register($pattern, Endpoints\ResizeEndpoint::class);
         }
         return [];
     }
