@@ -15,16 +15,11 @@ class Dispatcher
 
         $media = Config::get('media');
         foreach ($media as $k => $v) {
-            if (empty($v['url'])) {
+            if (empty($v['controller'])) {
                 continue;
             }
 
-            //обрабатываем только локальные URL
-            if ($v['url'][0] != '/') {
-                continue;
-            }
-
-            $controller = trim($v['url'], '/');
+            $controller = trim($v['controller'], '/');
             if (empty($controller)) {
                 continue;
             }

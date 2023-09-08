@@ -28,12 +28,10 @@ class ImageTag
 
         if ($resizeResource && $this->isResizeRequired($image)) {
             $resizeBase = Media::getStorageConfig($resizeResource, 'url');
-            if (empty($resizeBase)) {
-                $parsed = parse_url($src);
-                $resizeBase = (!empty($parsed['host']) ? (($parsed['scheme'] ?? 'http') . '://' . $parsed['host']) : '');
+            if (!empty($resizeBase)) {
+                $resizeMode = $this->getResizeMode();
+                $src = rtrim($resizeBase, '/') . '/' . $resizeMode . '/' . Media::encodePath($image['path']);
             }
-            $resizeMode = $this->getResizeMode();
-            $src = rtrim($resizeBase, '/') . '/' . $resizeResource . '/' . $resizeMode . '/' . Media::encodePath($image['path']);
         }
 
         if (empty($src)) {

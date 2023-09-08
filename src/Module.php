@@ -39,13 +39,10 @@ class Module implements ModuleInterface
     {
         $media = Config::get('media');
         foreach ($media as $v) {
-            if (empty($v['driver']) || empty($v['url']) || $v['driver'] != 'resize') {
+            if (empty($v['driver']) || empty($v['controller']) || $v['driver'] != 'resize') {
                 continue;
             }
-            if ($v['url'][0] != '/') {
-                continue;
-            }
-            $pattern = trim($v['url'], '/');
+            $pattern = trim($v['controller'], '/');
             if (empty($pattern)) {
                 continue;
             }
