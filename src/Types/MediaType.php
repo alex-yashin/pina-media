@@ -30,14 +30,14 @@ class MediaType extends IntegerType
     {
         /** @var MediaControl $input */
         $input = App::make(MediaControl::class);
-        $input->setName($field->getKey());
+        $input->setName($field->getName());
         $input->setMedia($this->getMedia($value));
 
         /** @var FormContentControl $control */
         $control = App::make(FormContentControl::class);
         $star = $field->isMandatory() ? ' *' : '';
         $control->setTitle($field->getTitle() . $star);
-        $control->setName($field->getKey());
+        $control->setName($field->getName());
         $control->setContent($input);
         return $control;
     }

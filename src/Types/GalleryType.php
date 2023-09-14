@@ -68,7 +68,7 @@ class GalleryType implements TypeInterface
         $control = App::make(FormContentControl::class);
         $star = $field->isMandatory() ? ' *' : '';
         $control->setTitle($field->getTitle() . $star);
-        $control->setName($field->getKey());
+        $control->setName($field->getName());
         $control->setContent($gallery);
         return $control;
     }
