@@ -84,7 +84,7 @@ class MediaControl extends Control
     protected function includeScripts()
     {
         App::assets()->addScript('/media-control.js');
-        App::assets()->addCss('/media-control.css');
+        App::assets()->addStyle('/media-control.css');
 
         App::assets()->addScriptContent('<script>' . $this->makeScriptContent() . '</script>');
     }
