@@ -72,9 +72,9 @@ class MediaControl extends Control
 
     protected function drawButton(): string
     {
-        $button = Html::tag(
-            'button',
+        $button = Html::a(
             __('Нажмите, чтобы загрузить файл'),
+            '#',
             ['class' => 'btn btn-secondary mt-2 media-upload-button action-upload-image']
         );
         $message = Html::tag('div', '', ['class' => 'message text-center']);
