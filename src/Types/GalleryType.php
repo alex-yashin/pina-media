@@ -138,7 +138,8 @@ class GalleryType implements TypeInterface
 
     public function setData($id, $value)
     {
-//        $this->makeRelationQuery()->whereBy($this->relationField, $id)->delete();
+        $this->makeRelationQuery()->whereBy($this->relationField, $id)->delete();
+
         $order = 0;
         if (!is_array($value)) {
             return;
