@@ -66,7 +66,7 @@ class ResizeEndpoint extends Endpoint
         $target = null;
         $resizeRoot = Media::getStorageConfig($resizeStorage, 'root');
         if ($resizeRoot) {
-            $target = rtrim($resizeRoot, '/') . '/' . $path;
+            $target = rtrim($resizeRoot, '/') . '/' . $fullResource;
             $targetDir = dirname($target);
             if (!file_exists($targetDir)) {
                 mkdir($targetDir, 0777, true);
