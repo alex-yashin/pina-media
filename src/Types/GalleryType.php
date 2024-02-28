@@ -61,7 +61,7 @@ class GalleryType implements TypeInterface
         $gallery = App::make(MediaGallery::class);
 
         /** @var MediaGallery $gallery */
-        $gallery->setName('gallery');
+        $gallery->setName($field->getName());
         $gallery->setMedia($value);
 
         /** @var FormContentControl $control */
@@ -122,15 +122,15 @@ class GalleryType implements TypeInterface
 
     public function getData($id)
     {
+        $relationQuery = $this->makeRelationQuery();
         $medias = $this->makeDirectoryQuery()
             ->select('*')
             ->innerJoin(
-                $this->makeRelationQuery()
-                    ->alias('relation')
+                $relationQuery
                     ->on('media_id', 'id')
                     ->onBy($this->relationField, $id)
             )
-            ->orderBy('relation.order', 'asc')
+            ->orderBy($relationQuery->getAlias().'.order', 'asc')
             ->getWithUrl();
 
         return $medias;
