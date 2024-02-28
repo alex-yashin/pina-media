@@ -30,7 +30,7 @@ class MediaControl extends Control
      */
     public function setMedia($media)
     {
-        $this->media = $media;
+        $this->media = $media ?? [];
     }
 
     /**
