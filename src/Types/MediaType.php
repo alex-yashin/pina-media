@@ -67,6 +67,7 @@ class MediaType extends IntegerType
 
         $view = App::make(MediaView::class);
         $view->setUrl($media['url']);
+        $view->setType($media['type']);
         return $view;
     }
 
