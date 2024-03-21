@@ -52,7 +52,7 @@ class MediaControl extends Control
         $options = [
             'id' => $this->tagId,
             'class' => 'image-control form-control',
-            'data-resource' => 'admin/en/upload',
+            'data-resource' => 'upload',
         ];
         $options += CSRF::tagAttributeArray('post');
         $content = $this->drawSpinner() . $this->drawThumbnails() . $this->drawButton();
