@@ -12,7 +12,7 @@ class File
     protected $path = null;
     protected $meta = [];
 
-    public function __construct($path, $name, $mime = null)
+    public function __construct($path, $name, $mime = null, $title = null)
     {
         $this->path = $path;
         if (!file_exists($this->path)) {
@@ -22,6 +22,7 @@ class File
         $this->meta += $this->getImageProperties($this->path, $mime);
         $this->meta += $this->getFileProperties($this->path);
         $this->meta['path'] = $this->generatePath($name);
+        $this->meta['title'] = $title ?? '';
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace PinaMedia;
 
 use Pina\Data\Schema;
+use Pina\Types\StringType;
 use PinaMedia\Types\MimeType;
 use PinaMedia\Types\StorageType;
 use Pina\TableDataGateway;
@@ -26,6 +27,7 @@ class MediaGateway extends TableDataGateway
         $schema->add('storage', __('Хранилище'), StorageType::class);
         $schema->add('path', __('Путь'), LongStringType::class);
         $schema->add('hash', __('Хэш'), TokenType::class);
+        $schema->add('title', __('Наименование'), StringType::class);
         $schema->add('width', __('Ширина'), IntegerType::class);
         $schema->add('height', __('Высота'), IntegerType::class);
         $schema->add('type', __('Mime-тип'), MimeType::class);
@@ -48,6 +50,5 @@ class MediaGateway extends TableDataGateway
         }
         return $data;
     }
-
 
 }

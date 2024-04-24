@@ -106,7 +106,7 @@ class Uploader
             $name = uniqid();
         }
 
-        return new File($tmpName, $name . '.' . $ext, $fileType);
+        return new File($tmpName, $name . '.' . $ext, $fileType, $fileName);
 
     }
 
