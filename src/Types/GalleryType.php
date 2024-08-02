@@ -86,6 +86,11 @@ class GalleryType implements TypeInterface
         return $gallery->drawWithWrappers();
     }
 
+    public function play($value): string
+    {
+        return $this->draw($value);
+    }
+
     public function getSize(): int
     {
         return 0;
