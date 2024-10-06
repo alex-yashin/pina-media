@@ -2,8 +2,9 @@
 
 namespace PinaMedia\Types;
 
+use Pina\Controls\HiddenInput;
+use Pina\Controls\NoInput;
 use PinaMedia\Controls\MediaView;
-use Pina\Controls\FormContentControl;
 use PinaMedia\Controls\MediaControl;
 use PinaMedia\Media;
 use PinaMedia\MediaGateway;
@@ -28,18 +29,15 @@ class MediaType extends IntegerType
      */
     public function makeControl(Field $field, $value): FormControl
     {
-        /** @var MediaControl $input */
-        $input = App::make(MediaControl::class);
-        $input->setName($field->getName());
-        $input->setMedia($this->getMedia($value));
+        $input = $this->resolveInput($field);
 
-        /** @var FormContentControl $control */
-        $control = App::make(FormContentControl::class);
-        $star = $field->isMandatory() ? ' *' : '';
-        $control->setTitle($field->getTitle() . $star);
-        $control->setName($field->getName());
-        $control->setContent($input);
-        return $control;
+        $input->setName($field->getName());
+        $input->setValue($this->getMedia($value));
+        $input->setTitle($field->getTitle());
+        $input->setDescription($field->getDescription());
+        $input->setRequired($field->isMandatory());
+
+        return $input;
     }
 
     /**
@@ -60,14 +58,8 @@ class MediaType extends IntegerType
      */
     public function draw($value): string
     {
-        $media = $this->getMedia($value);
-        if (empty($media['url'])) {
-            return '';
-        }
-
         $view = App::make(MediaView::class);
-        $view->setUrl($media['url']);
-        $view->setType($media['type']);
+        $view->setValue($this->getMedia($value));
         return $view;
     }
 
@@ -88,7 +80,6 @@ class MediaType extends IntegerType
         if (empty($media)) {
             return ['id' => 0, 'type' => '', 'url' => ''];
         }
-
         $media['url'] = Media::getUrl($media['storage'], $media['path']);
         unset($media['storage']);
         unset($media['path']);
@@ -118,6 +109,35 @@ class MediaType extends IntegerType
         $value = intval($value);
 
         return parent::normalize($value, $isMandatory);
+    }
+
+    /**
+     * @return MediaControl
+     */
+    protected function makeInput()
+    {
+        return App::make(MediaControl::class);
+    }
+
+    /**
+     * @return MediaView
+     */
+    protected function makeStatic()
+    {
+        return App::make(MediaView::class);
+    }
+
+    /**
+     * @return HiddenInput
+     */
+    protected function makeHidden()
+    {
+        return App::make(HiddenInput::class);
+    }
+
+    protected function makeNoInput()
+    {
+        return App::make(NoInput::class);
     }
 
 }

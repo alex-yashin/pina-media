@@ -3,52 +3,25 @@
 namespace PinaMedia\Controls;
 
 use Pina\App;
-use Pina\Controls\Control;
+use Pina\Controls\FormInput;
 use Pina\CSRF;
 use Pina\Html;
 
 use function Pina\__;
 
-class MediaControl extends Control
+class MediaControl extends FormInput
 {
     protected $tagId = '';
     protected $name = '';
-    protected $media = [];
 
     public function __construct()
     {
         $this->tagId = uniqid('im');
     }
 
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param array $media
-     */
-    public function setMedia($media)
-    {
-        $this->media = $media ?? [];
-    }
-
-    /**
-     * @return string
-     */
-    public function draw(): string
+    protected function drawInput()
     {
         $this->includeScripts();
-        return $this->drawInnerBefore() . $this->drawInner() . $this->drawInnerAfter();
-    }
-
-    protected function drawInner()
-    {
-        return $this->drawControl();
-    }
-
-    protected function drawControl(): string
-    {
         $options = [
             'id' => $this->tagId,
             'class' => 'image-control form-control',
@@ -91,7 +64,7 @@ class MediaControl extends Control
 
     protected function makeScriptContent()
     {
-        $encoded = json_encode($this->media, JSON_UNESCAPED_UNICODE);
+        $encoded = json_encode($this->value, JSON_UNESCAPED_UNICODE);
         return "SingleMediaControl('#" . $this->tagId . "', '" . $this->name . "', " . $encoded . ");";
     }
 

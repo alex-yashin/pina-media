@@ -5,26 +5,19 @@ namespace PinaMedia\Controls;
 
 
 use Pina\App;
-use Pina\Controls\Control;
 use Pina\Controls\Wrapper;
 
-class MediaGalleryView extends Control
+class MediaGalleryView extends MediaGallery
 {
-    protected $urls = [];
 
-    public function setUrls(array $urls)
-    {
-        $this->urls = $urls;
-        return $this;
-    }
-
-    protected function draw()
+    protected function drawInput()
     {
         $container = new Wrapper('.thumbnails');
-        foreach ($this->urls as $url) {
+        foreach ($this->value as $media) {
             /** @var MediaView $thumbnail */
             $thumbnail = App::make(MediaView::class);
-            $thumbnail->setUrl($url);
+            $thumbnail->setValue($media);
+            $thumbnail->setCompact();
             $container->append($thumbnail);
         }
         return $container;

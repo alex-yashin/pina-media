@@ -2,11 +2,12 @@
 
 namespace PinaMedia\Types;
 
+use Pina\Controls\HiddenInput;
+use Pina\Controls\NoInput;
 use PinaMedia\Controls\MediaGallery;
 use PinaMedia\Controls\MediaGalleryView;
 use PinaMedia\MediaGateway;
 use Pina\App;
-use Pina\Controls\FormContentControl;
 use Pina\Controls\FormControl;
 use Pina\Data\Field;
 use Pina\TableDataGateway;
@@ -58,19 +59,33 @@ class GalleryType implements TypeInterface
 
     public function makeControl(Field $field, $value): FormControl
     {
-        $gallery = App::make(MediaGallery::class);
 
-        /** @var MediaGallery $gallery */
-        $gallery->setName($field->getName());
-        $gallery->setMedia($value);
+        $input = $this->resolveInput($field);
 
-        /** @var FormContentControl $control */
-        $control = App::make(FormContentControl::class);
-        $star = $field->isMandatory() ? ' *' : '';
-        $control->setTitle($field->getTitle() . $star);
-        $control->setName($field->getName());
-        $control->setContent($gallery);
-        return $control;
+        $input->setName($field->getName());
+        $input->setValue($value);
+        $input->setTitle($field->getTitle());
+        $input->setDescription($field->getDescription());
+        $input->setRequired($field->isMandatory());
+
+        return $input;
+    }
+
+    protected function resolveInput(Field $field): FormControl
+    {
+        if ($field->isStatic() && $field->isHidden()) {
+            return $this->makeNoInput();
+        }
+
+        if ($field->isStatic()) {
+            return $this->makeStatic();
+        }
+
+        if ($field->isHidden()) {
+            return $this->makeHidden();
+        }
+
+        return $this->makeInput();
     }
 
     public function format($value): string
@@ -82,7 +97,8 @@ class GalleryType implements TypeInterface
     {
         /** @var MediaGalleryView $gallery */
         $gallery = App::make(MediaGalleryView::class);
-        $gallery->setUrls(array_column($value, 'url'));
+        $gallery->setValue($value);
+        $gallery->setCompact();
         return $gallery->drawWithWrappers();
     }
 
@@ -165,5 +181,34 @@ class GalleryType implements TypeInterface
     public function filter(TableDataGateway $query, $key, $value): void
     {
         //фильтрацию не поддерживаем
+    }
+
+    /**
+     * @return MediaGallery
+     */
+    protected function makeInput()
+    {
+        return App::make(MediaGallery::class);
+    }
+
+    /**
+     * @return MediaGalleryView
+     */
+    protected function makeStatic()
+    {
+        return App::make(MediaGalleryView::class);
+    }
+
+    /**
+     * @return HiddenInput
+     */
+    protected function makeHidden()
+    {
+        return App::make(HiddenInput::class);
+    }
+
+    protected function makeNoInput()
+    {
+        return App::make(NoInput::class);
     }
 }
