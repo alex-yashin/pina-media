@@ -22,8 +22,8 @@ class MediaGateway extends TableDataGateway
      */
     public function getSchema()
     {
-        $schema = new Schema();
-        $schema->addAutoincrementPrimaryKey('id', 'ID');
+        $schema = parent::getSchema();
+        $schema->addAutoincrementPrimaryKey();
         $schema->add('storage', __('Хранилище'), StorageType::class);
         $schema->add('path', __('Путь'), LongStringType::class);
         $schema->add('hash', __('Хэш'), TokenType::class);
