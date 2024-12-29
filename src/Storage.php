@@ -156,7 +156,7 @@ class Storage
         if (is_null($this->config['url'])) {
             throw new Exception("Missed url configuration");
         }
-        return $this->concatPathToUrl($this->config['url'], $adapter->getPathPrefix() . $path);
+        return $this->concatPathToUrl($this->config['url'], $path);
     }
 
     protected function concatPathToUrl($url, $path)
