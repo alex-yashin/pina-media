@@ -10,6 +10,7 @@ use Pina\Input;
 use PinaMedia\ImageResizer;
 use PinaMedia\Media;
 use Pina\Response;
+use PinaMedia\MediaGateway;
 
 class ResizeEndpoint extends Endpoint
 {
@@ -30,6 +31,7 @@ class ResizeEndpoint extends Endpoint
         }
 
         $fullResource = Input::getResource();//ltrim($this->server()->get('REQUEST_URI'), '/');
+
         if (strpos($fullResource, '/../') !== false) {
             return Response::badRequest()->setContent(new EmptyContent);
         }
@@ -55,6 +57,16 @@ class ResizeEndpoint extends Endpoint
         }
 
         $path = substr($fullResource, strlen($base));
+
+        $exists = MediaGateway::instance()
+            ->whereBy('storage', $originalStorage)
+            ->whereBy('path', $path)
+            ->exists();
+
+        if (!$exists) {
+            return Response::badRequest()->setContent(new EmptyContent);
+        }
+
         $storage = Media::getStorage($originalStorage);
         $file = $storage->getLocalFile($path);
 
