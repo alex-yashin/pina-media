@@ -98,7 +98,6 @@ class GalleryType implements TypeInterface
         /** @var MediaGalleryView $gallery */
         $gallery = App::make(MediaGalleryView::class);
         $gallery->setValue($value);
-        $gallery->setCompact();
         return $gallery->drawWithWrappers();
     }
 

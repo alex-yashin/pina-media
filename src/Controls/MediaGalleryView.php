@@ -7,18 +7,20 @@ namespace PinaMedia\Controls;
 use Pina\App;
 use Pina\Controls\Wrapper;
 
-class MediaGalleryView extends MediaGallery
+class MediaGalleryView extends MediaStaticFormControl
 {
-
-    protected function drawInput()
+    protected function draw()
     {
-        $container = new Wrapper('.thumbnails');
-        foreach ($this->value as $media) {
-            /** @var MediaView $thumbnail */
-            $thumbnail = App::make(MediaView::class);
-            $thumbnail->setValue($media);
-            $thumbnail->setCompact();
-            $container->append($thumbnail);
+        if (empty($this->value) || !is_array($this->value)) {
+            return '';
+        }
+
+        $container = new Wrapper('.thumbnails attachments');
+        foreach ($this->value as $line) {
+            /** @var MediaView $view */
+            $view = App::make(MediaView::class);
+            $view->setValue($line);
+            $container->append($view);
         }
         return $container;
     }

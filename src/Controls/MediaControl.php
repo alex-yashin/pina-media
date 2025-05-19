@@ -46,9 +46,9 @@ class MediaControl extends FormInput
     protected function drawButton(): string
     {
         $button = Html::a(
-            __('Нажмите, чтобы загрузить файл'),
+            '📎',
             '#',
-            ['class' => 'btn btn-secondary mt-2 media-upload-button action-upload-image']
+            ['class' => 'btn btn-secondary btn-attachment mt-2 media-upload-button action-upload-image']
         );
         $message = Html::tag('div', '', ['class' => 'message text-center']);
         return $button . $message;

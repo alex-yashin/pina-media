@@ -58,6 +58,7 @@ class MediaType extends IntegerType
      */
     public function draw($value): string
     {
+        /** @var MediaView $view */
         $view = App::make(MediaView::class);
         $view->setValue($this->getMedia($value));
         return $view;
@@ -73,6 +74,7 @@ class MediaType extends IntegerType
         $media = MediaGateway::instance()
             ->select('id')
             ->select('type')
+            ->select('title')
             ->select('storage')
             ->select('path')
             ->find($id);
