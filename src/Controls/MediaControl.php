@@ -27,7 +27,6 @@ class MediaControl extends FormInput
             'class' => 'image-control form-control',
             'data-resource' => 'upload',
         ];
-        $options += CSRF::tagAttributeArray('post');
         $content = $this->drawSpinner() . $this->drawThumbnails() . $this->drawButton();
         return Html::tag('div', $content, $options);
     }

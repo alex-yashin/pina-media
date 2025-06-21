@@ -16,7 +16,7 @@ use Pina\Types\ValidateException;
 
 use function Pina\__;
 
-class GalleryType implements TypeInterface
+class GalleryRelation implements TypeInterface
 {
     /**
      * @var TableDataGateway
