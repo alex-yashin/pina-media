@@ -23,7 +23,7 @@ class MediaEndpoint extends Endpoint
      */
     public function index()
     {
-        $storageKey = $this->location->resource('@');
+        $storageKey = $this->location()->resource('@');
         $config = Config::get('media', $storageKey);
 
         if (empty($config)) {

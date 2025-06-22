@@ -21,7 +21,7 @@ class ResizeEndpoint extends Endpoint
      */
     public function index()
     {
-        $resizeStorage = $this->location->resource('@');
+        $resizeStorage = $this->location()->resource('@');
         $originalStorage = Media::getStorageConfig($resizeStorage, 'original');
         if (empty($originalStorage)) {
             return Response::badRequest()->setContent(new EmptyContent);
