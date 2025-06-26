@@ -57,8 +57,3 @@ class Module implements ModuleInterface
     }
 
 }
-
-function __($string)
-{
-    return Language::translate($string, __NAMESPACE__);
-}

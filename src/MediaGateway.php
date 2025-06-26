@@ -11,6 +11,8 @@ use Pina\Types\IntegerType;
 use Pina\Types\LongStringType;
 use Pina\Types\TokenType;
 
+use function Pina\__;
+
 class MediaGateway extends TableDataGateway
 {
 

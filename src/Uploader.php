@@ -7,6 +7,8 @@ use Pina\BadRequestException;
 use Pina\Log;
 use RuntimeException;
 
+use function Pina\__;
+
 class Uploader
 {
     var $queue = [];
