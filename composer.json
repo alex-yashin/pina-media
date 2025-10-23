@@ -16,7 +16,7 @@
     "require": {
         "php": ">=7.2",
         "pinahq/framework": "*",
-        "league/flysystem": "1.0.49",
+        "league/flysystem": "1.1.*",
         "league/flysystem-aws-s3-v3": "*",
         "ext-json": "*",
         "ext-curl": "*",

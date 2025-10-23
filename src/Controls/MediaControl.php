@@ -4,10 +4,7 @@ namespace PinaMedia\Controls;
 
 use Pina\App;
 use Pina\Controls\FormInput;
-use Pina\CSRF;
 use Pina\Html;
-
-use function Pina\__;
 
 class MediaControl extends FormInput
 {

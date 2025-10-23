@@ -6,7 +6,6 @@ use Pina\Access;
 use Pina\App;
 use Pina\Config;
 
-use Pina\Language;
 use Pina\ModuleInterface;
 use Pina\DispatcherRegistry;
 
