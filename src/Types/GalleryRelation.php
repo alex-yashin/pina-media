@@ -4,6 +4,7 @@ namespace PinaMedia\Types;
 
 use Pina\Controls\HiddenInput;
 use Pina\Controls\NoInput;
+use Pina\SQL;
 use PinaMedia\Controls\MediaGallery;
 use PinaMedia\Controls\MediaGalleryView;
 use PinaMedia\MediaGateway;
@@ -27,7 +28,7 @@ class GalleryRelation implements TypeInterface
      */
     protected $relationField = '';
 
-    public function __construct(TableDataGateway $relationTable, $relationField)
+    public function __construct(SQL $relationTable, $relationField)
     {
         $this->relationTable = $relationTable;
         $this->relationField = $relationField;
@@ -38,7 +39,7 @@ class GalleryRelation implements TypeInterface
         return MediaGateway::instance();
     }
 
-    protected function makeRelationQuery(): TableDataGateway
+    protected function makeRelationQuery(): SQL
     {
         return clone $this->relationTable;
     }
