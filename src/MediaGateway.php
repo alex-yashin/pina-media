@@ -16,13 +16,15 @@ use function Pina\__;
 class MediaGateway extends TableDataGateway
 {
 
-    protected static $table = "media";
+    public function getTable(): string
+    {
+        return "media";
+    }
 
     /**
-     * @return Schema
      * @throws \Exception
      */
-    public function getSchema()
+    public function getSchema(): Schema
     {
         $schema = parent::getSchema();
         $schema->addAutoincrementPrimaryKey();

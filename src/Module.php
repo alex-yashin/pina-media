@@ -2,12 +2,12 @@
 
 namespace PinaMedia;
 
-use Pina\Access;
 use Pina\App;
 use Pina\Config;
 
 use Pina\ModuleInterface;
 use Pina\DispatcherRegistry;
+use Pina\Router;
 
 class Module implements ModuleInterface
 {
@@ -27,32 +27,23 @@ class Module implements ModuleInterface
         return 'Media';
     }
 
-    public function http()
+    public function __construct()
     {
-        Access::permit('resize', 'public');
         DispatcherRegistry::register(new Dispatcher());
-        return $this->initRouter();
-    }
 
-    public function initRouter()
-    {
-        $media = Config::get('media');
-        foreach ($media as $v) {
-            if (empty($v['driver']) || empty($v['controller']) || $v['driver'] != 'resize') {
-                continue;
+        App::onLoad(Router::class, function(Router $router) {
+            $media = Config::get('media');
+            foreach ($media as $v) {
+                if (empty($v['driver']) || empty($v['controller']) || $v['driver'] != 'resize') {
+                    continue;
+                }
+                $pattern = trim($v['controller'], '/');
+                if (empty($pattern)) {
+                    continue;
+                }
+                $router->register($pattern, Endpoints\ResizeEndpoint::class)->permit('public');
             }
-            $pattern = trim($v['controller'], '/');
-            if (empty($pattern)) {
-                continue;
-            }
-            App::router()->register($pattern, Endpoints\ResizeEndpoint::class);
-        }
-        return [];
-    }
-
-    public function cli()
-    {
-        return [];
+        });
     }
 
 }
