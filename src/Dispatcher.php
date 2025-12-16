@@ -3,11 +3,12 @@
 namespace PinaMedia;
 
 use Pina\Config;
+use Pina\Router\DispatcherInterface;
 
-class Dispatcher
+class Dispatcher implements DispatcherInterface
 {
 
-    public function dispatch($resource)
+    public function dispatch(string $resource): ?string
     {
         if (empty($resource)) {
             return $resource;

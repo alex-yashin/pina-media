@@ -6,7 +6,6 @@ use Pina\App;
 use Pina\Config;
 
 use Pina\ModuleInterface;
-use Pina\DispatcherRegistry;
 use Pina\Router;
 
 class Module implements ModuleInterface
@@ -29,9 +28,9 @@ class Module implements ModuleInterface
 
     public function __construct()
     {
-        DispatcherRegistry::register(new Dispatcher());
-
         App::onLoad(Router::class, function(Router $router) {
+            $router->registerDispatcher(new Dispatcher());
+
             $media = Config::get('media');
             foreach ($media as $v) {
                 if (empty($v['driver']) || empty($v['controller']) || $v['driver'] != 'resize') {
