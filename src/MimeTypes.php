@@ -58,11 +58,9 @@ class MimeTypes
         return array_search($mime, static::$mimeTypes);
     }
     
-    /*
     public static function resolveMimeType($ext)
     {
         return static::$mimeTypes[$ext] ?? 'application/octet-stream';
     }
-    */
-    
+
 }

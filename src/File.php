@@ -141,26 +141,23 @@ class File
         ];
     }
 
-    protected function getImageProperties($path, $type)
+    protected function getImageProperties($path, $type = null)
     {
         $info = getimagesize($path);
         if (empty($info)) {
             $info = [];
         }
 
+        if (empty($info['mime']) && !empty($type)) {
+            $info['mime'] = $type;
+        }
+
         if (empty($info['mime'])) {
             $info['mime'] = mime_content_type($path);
         }
 
-        /*
-          if (empty($info['mime'])) {
-          $pathInfo = pathinfo($name);
-          $info['mime'] = MimeTypes::resolveMimeType($pathInfo['extension']);
-          }
-         */
-
         if (empty($info['mime'])) {
-            $info['mime'] = $type;
+            $info['mime'] = MimeTypes::resolveMimeType(pathinfo($path, PATHINFO_EXTENSION));
         }
 
         return [
