@@ -23,8 +23,7 @@ class UploadEndpoint extends Endpoint
     {
         App::forceMimeType("application/json");
         try {
-            $uploader = new Uploader();
-            $mediaIds = $uploader->save();
+            $mediaIds = $this->makeUploader()->save();
         } catch (RuntimeException $e) {
             throw new BadRequestException($e->getMessage());
         }
@@ -35,5 +34,10 @@ class UploadEndpoint extends Endpoint
         }
 
         return Response::ok()->json($id == 'single' && count($ms) ? $ms[0] : $ms);
+    }
+
+    protected function makeUploader(): Uploader
+    {
+        return new Uploader();
     }
 }

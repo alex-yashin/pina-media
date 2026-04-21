@@ -17,6 +17,8 @@ class Uploader
         'image/*',
     ];
 
+    protected $storageKey = '';
+
     public function __construct()
     {
 
@@ -38,6 +40,11 @@ class Uploader
     public function allowMimeType($pattern)
     {
         $this->allowedMimeTypes[] = $pattern;
+    }
+
+    public function setStorageKey($storageKey)
+    {
+        $this->storageKey = $storageKey;
     }
 
     /**
@@ -77,7 +84,7 @@ class Uploader
             throw new BadRequestException(__('Неверный тип файла') . ': ' . $file->getMimeType());
         }
 
-        $file->moveToStorage();
+        $file->moveToStorage($this->storageKey);
         $mediaId = $file->saveMeta();
 
         if (empty($mediaId)) {

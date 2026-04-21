@@ -10,10 +10,16 @@ class MediaControl extends FormInput
 {
     protected $tagId = '';
     protected $name = '';
+    protected $resource = 'upload';
 
     public function __construct()
     {
         $this->tagId = uniqid('im');
+    }
+
+    public function setResource($resource)
+    {
+        $this->resource = $resource;
     }
 
     protected function drawInput()
@@ -22,7 +28,7 @@ class MediaControl extends FormInput
         $options = [
             'id' => $this->tagId,
             'class' => 'image-control form-control',
-            'data-resource' => 'upload',
+            'data-resource' => $this->resource,
         ];
         $content = $this->drawSpinner() . $this->drawThumbnails() . $this->drawButton();
         return Html::tag('div', $content, $options);
