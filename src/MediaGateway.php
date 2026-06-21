@@ -36,7 +36,6 @@ class MediaGateway extends TableDataGateway
         $schema->add('height', __('Высота'), IntegerType::class);
         $schema->add('type', __('Mime-тип'), MimeType::class);
         $schema->add('size', __('Размер'), IntegerType::class);
-        $schema->addUniqueKey(['storage', 'path']);
         return $schema;
     }
 
